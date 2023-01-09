@@ -26,7 +26,7 @@ public class S3Service implements FileService{
         // also in permission part must give Object Ownership ACLs enabled and Buket owner preferred
         // https://stackoverflow.com/questions/70333681/for-an-amazon-s3-bucket-deployment-from-github-how-do-i-fix-the-error-accesscont
 
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIA3VK3GV2JUKYG3VL3", "9ofnzNKTUeHpSW5AYlpUyKnwvrVX6fsoq3KWBqvz");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(System.getProperty("cloud.aws.credentials.access-key"), System.getProperty("cloud.aws.credentials.secret-key"));
 
         awsS3Client = new AmazonS3Client(awsCreds);
 
