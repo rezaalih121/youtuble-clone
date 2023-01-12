@@ -1,5 +1,5 @@
 package com.rezaalih121.youtubleclone.service;
-import com.amazonaws.auth.BasicAWSCredentials;
+
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -17,21 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class S3Service implements FileService{
     public static final String BUCKET_NAME = "rai-youtube-clone";
+
     private final AmazonS3Client awsS3Client;
-
-    public S3Service() {
-        //TODO moving the secrekeys to environment variable
-
-        // to solve the access problem first must make access public to AWS bucket and
-        // also in permission part must give Object Ownership ACLs enabled and Buket owner preferred
-        // https://stackoverflow.com/questions/70333681/for-an-amazon-s3-bucket-deployment-from-github-how-do-i-fix-the-error-accesscont
-
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(System.getProperty("cloud.aws.credentials.access-key"), System.getProperty("cloud.aws.credentials.secret-key"));
-
-        awsS3Client = new AmazonS3Client(awsCreds);
-
-    }
-
 
     @Override
     public String uploadFile(MultipartFile file){
