@@ -1,31 +1,36 @@
-<vg-player>
-  <vg-overlay-play></vg-overlay-play>
-  <vg-buffering></vg-buffering>
+<vm-player #player playsinline (vPlaybackReady)="onPlaybackReady()">
+<!--  <vm-video  poster="https://media.vimejs.com/poster.png">-->
+  <vm-video >
+  <source data-src="{{videoUrl}}" type="video/mp4" />
 
-  <vg-scrub-bar>
-    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-  </vg-scrub-bar>
+  </vm-video>
+  <vm-default-settings></vm-default-settings>
+  <vm-dbl-click-fullscreen></vm-dbl-click-fullscreen>
 
-  <vg-controls>
-    <vg-play-pause></vg-play-pause>
-    <vg-playback-button></vg-playback-button>
+  <vm-ui>
+    <vm-skeleton></vm-skeleton>
 
-    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+    <!-- ... -->
+    <vm-controls>
+      <vm-click-to-play></vm-click-to-play>
+      <vm-spinner></vm-spinner>
 
-    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+      <vm-playback-control></vm-playback-control>
 
-    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+      <vm-volume-control></vm-volume-control>
+      <vm-control-spacer></vm-control-spacer>
 
-    <vg-track-selector></vg-track-selector>
-    <vg-mute></vg-mute>
-    <vg-volume></vg-volume>
+      <vm-current-time /> | <vm-end-time />
 
-    <vg-fullscreen></vg-fullscreen>
-  </vg-controls>
 
-  <video #media [vgMedia]="$any(media)"  id="singleVideo" preload="auto" >
-    <source [src]="videoUrl" type="video/mp4">
-  </video>
-</vg-player>
+
+      <vm-scrubber-control></vm-scrubber-control>
+
+      <vm-pip-control></vm-pip-control>
+
+      <vm-fullscreen-control></vm-fullscreen-control>
+    </vm-controls>
+
+  </vm-ui>
+
+</vm-player>

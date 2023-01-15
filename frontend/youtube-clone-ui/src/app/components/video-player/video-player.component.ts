@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import { Player } from '@vime/angular';
 
 @Component({
   selector: 'app-video-player',
@@ -8,4 +9,10 @@ import {Component, Input} from '@angular/core';
 export class VideoPlayerComponent {
 @Input()
 videoUrl!:string | '';
+
+  @ViewChild('player') player!: Player;
+
+  onPlaybackReady() {
+    // ...
+  }
 }

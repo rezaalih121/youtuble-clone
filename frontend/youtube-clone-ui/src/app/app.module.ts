@@ -18,12 +18,10 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
 import {MatChipsModule} from "@angular/material/chips";
-import {VgCoreModule} from "@videogular/ngx-videogular/core";
-import {VgOverlayPlayModule} from "@videogular/ngx-videogular/overlay-play";
-import {VgBufferingModule} from "@videogular/ngx-videogular/buffering";
-import {VgControlsModule} from "@videogular/ngx-videogular/controls";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import {VimeModule} from "@vime/angular";
+import { TapSidesToSeekComponent } from './components/video-player/tap-sides-to-seek/tap-sides-to-seek.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +29,8 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     UploadVideoComponent,
     HeaderComponent,
     SaveVideoDetailsComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    TapSidesToSeekComponent
   ],
   imports: [
     BrowserModule,
@@ -50,11 +49,8 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     ReactiveFormsModule,
     MatChipsModule,
     BrowserModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    VimeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
