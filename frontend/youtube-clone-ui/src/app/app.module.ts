@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxFileDropModule} from "ngx-file-drop";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import { HeaderComponent } from './components/header/header.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -22,6 +22,8 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import {VimeModule} from "@vime/angular";
 import { TapSidesToSeekComponent } from './components/video-player/tap-sides-to-seek/tap-sides-to-seek.component';
+import { AuthConfigModule } from './auth/auth-config.module';
+import {AuthInterceptor} from "angular-auth-oidc-client";
 
 @NgModule({
   declarations: [
@@ -50,9 +52,12 @@ import { TapSidesToSeekComponent } from './components/video-player/tap-sides-to-
     MatChipsModule,
     BrowserModule,
     MatSnackBarModule,
-    VimeModule
+    VimeModule,
+    AuthConfigModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS , useClass: AuthInterceptor, multi:true} // added interceptor to check the authentication on any http request
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

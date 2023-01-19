@@ -5,6 +5,7 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../../services/video.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {VideoDto} from "../../models/Video-dto.";
 
 
 @Component({
@@ -40,10 +41,12 @@ export class SaveVideoDetailsComponent {
   fileSelected: boolean = false;
   videoId = "";
   videoUrl!: string;
+  thumbnailUrl!: string;
   constructor( private activatedRoute: ActivatedRoute , private videoService:VideoService , private _snackBar: MatSnackBar) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
+      this.thumbnailUrl = data.thumbnailUrl;
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
@@ -97,11 +100,29 @@ export class SaveVideoDetailsComponent {
   onUpload() {
     this.videoService.uploadThumbnailFile(this.selectedFile, this.videoId).subscribe(data =>{
       console.log(data);
+      this.thumbnailUrl = data;
 
        this._snackBar.open("Thumbnail successfully uploaded !", 'Ok' , {
          duration: 5000,
        });
-
     })
+  }
+  saveVieo(){
+    // make a call to video service to make http call to our backend
+
+    const videoMataData : VideoDto = {
+      "id": this.videoId,
+      "title": this.saveVideoDetailsForm.get('title')?.value,
+      "description": this.saveVideoDetailsForm.get('description')?.value,
+      "tags": this.tags,
+      "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
+      "videoUrl" : this.videoUrl,
+      "thumbnailUrl": this.thumbnailUrl
+    };
+      this.videoService.saveVideo(videoMataData).subscribe(data => {
+        this._snackBar.open("Video Metadata updated successfully !", 'Ok' , {
+          duration: 5000,
+        });
+      });
   }
 }
