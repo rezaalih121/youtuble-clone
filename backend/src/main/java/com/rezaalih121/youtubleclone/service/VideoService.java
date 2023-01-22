@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,6 @@ public class VideoService {
         video.setVideoUrl(videoUrl);
         Video savedVideo = videoRepository.save(video);
         return new UploadVideoResponse(savedVideo.getId() , savedVideo.getVideoUrl());
-
     }
 
     public VideoDto editVideo(VideoDto videoDto){
@@ -96,7 +97,6 @@ public class VideoService {
         if (userService.ifLikedVideo(videoId)) {
             videoById.decrementLikes();
             userService.removeFromLikedVideos(videoId);
-
         }else if(userService.ifDisLikedVideo(videoId)){
             videoById.decrementDisLikes();
             userService.removeFromDisLikedVideos(videoId);
@@ -138,6 +138,7 @@ public class VideoService {
         videoDto.setVideoUrl(videoById.getVideoUrl());
         videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
         videoDto.setId(videoById.getId());
+        videoDto.setPublisherId(videoById.getUserId());
         videoDto.setTitle(videoById.getTitle());
         videoDto.setDescription(videoById.getDescription());
         videoDto.setTags(videoById.getTags());
@@ -153,6 +154,7 @@ public class VideoService {
         Comment comment = new Comment();
         comment.setText(commentDto.getCommentText());
         comment.setAuthorId(commentDto.getAuthorId());
+        comment.setCreatedAt(commentDto.getCreatedAt());
         video.addComment(comment);
 
         videoRepository.save(video);
@@ -168,6 +170,7 @@ public class VideoService {
         CommentDto commentDto = new CommentDto();
         commentDto.setCommentText(comment.getText());
         commentDto.setAuthorId(comment.getAuthorId());
+        commentDto.setCreatedAt(comment.getCreatedAt());
         return commentDto;
     }
 
@@ -175,5 +178,13 @@ public class VideoService {
         return videoRepository.findAll().stream().map(this::mapToVideoDto).toList();
     }
 
+    public void deleteComment (String videoId, CommentDto commentDto) {
+        Video video = getVideoById(videoId);
+        List<Comment> commentList = video.getCommentList();
+        boolean b = commentList.removeIf(comment -> comment.getCreatedAt().equals(commentDto.getCreatedAt() )&& comment.getAuthorId().equals(commentDto.getAuthorId()) );
+        video.setCommentList(commentList);
+        videoRepository.save(video);
+
+    }
 
 }

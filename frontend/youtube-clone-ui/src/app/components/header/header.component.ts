@@ -24,6 +24,6 @@ export class HeaderComponent {
     this.oidcSecurityService.revokeRefreshToken()
     this.oidcSecurityService.revokeAccessToken();
     this.oidcSecurityService.logoffAndRevokeTokens();
-    this.oidcSecurityService.logoff();
+    this.oidcSecurityService.logoffLocal();
   }
 }

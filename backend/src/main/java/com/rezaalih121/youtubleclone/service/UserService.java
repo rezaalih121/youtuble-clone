@@ -98,7 +98,7 @@ public class UserService {
         return user.getVideoHistory();
     }
 
-    private User getUserById(String userId) {
+    public User getUserById(String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Cannot find user with userId : " + userId));
         return user;
     }

@@ -6,31 +6,8 @@
   </vm-video>
   <vm-default-settings></vm-default-settings>
   <vm-dbl-click-fullscreen></vm-dbl-click-fullscreen>
-
-  <vm-ui>
-    <vm-skeleton></vm-skeleton>
-
-    <!-- ... -->
-    <vm-controls>
-      <vm-click-to-play></vm-click-to-play>
-      <vm-spinner></vm-spinner>
-
-      <vm-playback-control></vm-playback-control>
-
-      <vm-volume-control></vm-volume-control>
-      <vm-control-spacer></vm-control-spacer>
-
-      <vm-current-time /> | <vm-end-time />
-
-
-
-      <vm-scrubber-control></vm-scrubber-control>
-
-      <vm-pip-control></vm-pip-control>
-
-      <vm-fullscreen-control></vm-fullscreen-control>
-    </vm-controls>
-
-  </vm-ui>
+  <vm-default-ui no-click-to-play>
+    <!-- We can place our own UI components here to extend the default UI. -->
+  </vm-default-ui>
 
 </vm-player>

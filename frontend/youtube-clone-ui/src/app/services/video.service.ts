@@ -33,12 +33,22 @@ export class VideoService {
       });
   }
   getVideo(videoId : string):Observable<VideoDto>{
-
    return  this.httpClient.get<VideoDto>(this.api+"/"+videoId);
-
   }
 
   saveVideo(videoMataData: VideoDto): Observable<VideoDto> {
       return this.httpClient.put<VideoDto>(this.api,videoMataData);
+  }
+
+  getAllVideos(): Observable<Array<VideoDto>> {
+    return this.httpClient.get<Array<VideoDto>>(this.api);
+  }
+
+  likeVideo(videoId: string): Observable<VideoDto> {
+    return this.httpClient.post<VideoDto>(this.api +"/" + videoId + "/like", null);
+  }
+
+  disLikeVideo(videoId: string): Observable<VideoDto> {
+    return this.httpClient.post<VideoDto>(this.api+ "/" + videoId + "/disLike", null);
   }
 }

@@ -8,10 +8,10 @@ import {AuthModule, LogLevel} from 'angular-auth-oidc-client';
     AuthModule.forRoot({
         config: {
             authority: 'https://dev-w8y1r3gda1tgzriw.us.auth0.com',
-            redirectUrl: window.location.origin,
+            redirectUrl: window.location.origin + "/callback",
             postLogoutRedirectUri: window.location.origin,
             clientId: 'n3OScGopzYFouNlTdpDlDIA8y8hCGxfr',
-            scope: 'openid profile offline_access',
+            scope: 'openid profile offline_access email',// here we are specifying the data we need to get from oauth0  on https://programmingtechie.eu.auth0.com/userinfo
             responseType: 'code',
             silentRenew: true,
             useRefreshToken: true,

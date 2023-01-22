@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../../services/video.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {VideoDto} from "../../models/Video-dto.";
+import {UserService} from "../../services/user.service";
 
 
 @Component({
@@ -42,17 +43,25 @@ export class SaveVideoDetailsComponent {
   videoId = "";
   videoUrl!: string;
   thumbnailUrl!: string;
-  constructor( private activatedRoute: ActivatedRoute , private videoService:VideoService , private _snackBar: MatSnackBar) {
+
+  userId!: string;
+
+  videoAvailable: boolean = false;
+
+  constructor( private activatedRoute: ActivatedRoute , private videoService:VideoService , private _snackBar: MatSnackBar , private userService: UserService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
+      this.videoAvailable = true;
     })
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
       description: this.description,
       videoStatus: this.videoStatus
     })
+
+    this.userId = userService.getUserId();
   }
 
   add(event: MatChipInputEvent): void {
@@ -112,12 +121,16 @@ export class SaveVideoDetailsComponent {
 
     const videoMataData : VideoDto = {
       "id": this.videoId,
+      "publisherId": this.userId,
       "title": this.saveVideoDetailsForm.get('title')?.value,
       "description": this.saveVideoDetailsForm.get('description')?.value,
       "tags": this.tags,
       "videoStatus": this.saveVideoDetailsForm.get('videoStatus')?.value,
       "videoUrl" : this.videoUrl,
-      "thumbnailUrl": this.thumbnailUrl
+      "thumbnailUrl": this.thumbnailUrl,
+      "likeCount": 0,
+      "dislikeCount": 0,
+      "viewCount": 0
     };
       this.videoService.saveVideo(videoMataData).subscribe(data => {
         this._snackBar.open("Video Metadata updated successfully !", 'Ok' , {
