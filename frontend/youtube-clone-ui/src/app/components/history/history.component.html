@@ -1,1 +1,8 @@
-<p>history works!</p>
+<div fxLayout="row wrap">
+  <h3>Video watched History </h3>
+</div>
+<div fxLayout="row wrap" fxLayoutGap="12px grid">
+  <div fxFlex="30%" *ngFor="let historyVideo of historyVideos">
+    <app-video-card [video]="historyVideo"></app-video-card>
+  </div>
+</div>

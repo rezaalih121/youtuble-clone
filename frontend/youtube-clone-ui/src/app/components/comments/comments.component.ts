@@ -16,6 +16,10 @@ export class CommentsComponent {
   videoId: string = '';
   commentsForm: FormGroup;
   commentsDto: CommentDto[] = [];
+  currentUserId: string = "";
+
+  @Input()
+  publisherId: string ='';
 
   authorDtos: UserDto[] = [];
   authorDto!: UserDto;
@@ -27,13 +31,15 @@ export class CommentsComponent {
   }
 
   ngOnInit(): void {
+
+    this.currentUserId = this.userService.getUserId();
     this.getComments();
   }
 
   getAuthorInfo(userId:string){
     this.userService.getPublisherInfo(userId).subscribe(date => {
       this.authorDto =  date;
-      this.authorDtos.push(this.authorDto);
+       this.authorDtos.push(this.authorDto);
     })
   }
 
@@ -63,6 +69,7 @@ export class CommentsComponent {
       for (let i=0;i<this.commentsDto.length;i++) {
         this.getAuthorInfo(this.commentsDto[i].authorId);
       }
+
     });
   }
 

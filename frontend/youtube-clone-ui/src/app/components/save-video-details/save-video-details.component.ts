@@ -121,7 +121,7 @@ export class SaveVideoDetailsComponent {
 
     const videoMataData : VideoDto = {
       "id": this.videoId,
-      "publisherId": this.userId,
+      "userId": this.userId,
       "title": this.saveVideoDetailsForm.get('title')?.value,
       "description": this.saveVideoDetailsForm.get('description')?.value,
       "tags": this.tags,

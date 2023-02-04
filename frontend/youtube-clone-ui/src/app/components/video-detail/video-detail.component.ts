@@ -39,15 +39,17 @@ export class VideoDetailComponent {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
-      this.publisherId = data.publisherId;
+      this.publisherId = data.userId;
+
+      this.userService.getPublisherInfo(data.userId).subscribe((data) => {
+        this.subscribersCount = data.subscribersCount;
+        this.videoPublisherName = data.givenName;
+
+      })
+      console.log(data)
 
     });
 
-    this.userService.getPublisherInfo(this.publisherId).subscribe((data) => {
-      this.subscribersCount = data.subscribersCount;
-      this.videoPublisherName = data.givenName;
-
-    })
 
 
   }

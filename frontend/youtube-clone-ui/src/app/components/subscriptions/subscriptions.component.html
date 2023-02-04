@@ -1,1 +1,8 @@
-<p>subscriptions works!</p>
+<div fxLayout="row wrap">
+  <h3>Subscribed To User and their Videos</h3>
+</div>
+<div fxLayout="row wrap" fxLayoutGap="12px grid">
+  <div fxFlex="30%" *ngFor="let subscribedVideo of subscriptionsVideos">
+    <app-video-card [video]="subscribedVideo"></app-video-card>
+  </div>
+</div>

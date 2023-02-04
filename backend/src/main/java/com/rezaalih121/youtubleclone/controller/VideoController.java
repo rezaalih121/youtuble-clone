@@ -4,6 +4,7 @@ package com.rezaalih121.youtubleclone.controller;
 import com.rezaalih121.youtubleclone.dto.UploadVideoResponse;
 import com.rezaalih121.youtubleclone.dto.VideoDto;
 import com.rezaalih121.youtubleclone.dto.CommentDto;
+import com.rezaalih121.youtubleclone.service.UserService;
 import com.rezaalih121.youtubleclone.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -19,6 +22,7 @@ import java.util.List;
 public class VideoController {
 
     private final VideoService videoService;
+    private final UserService userService;
     @PostMapping
     public ResponseEntity<UploadVideoResponse> uploadVideo(@RequestParam("file") MultipartFile file){
         UploadVideoResponse uploadVideoResponse = videoService.uploadVideo(file);
@@ -107,6 +111,52 @@ public class VideoController {
         else
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/subscribed-to-videos")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<VideoDto>> getSubscribedToVideos(){
+        Set<String> subscribedToUsersList = userService.getCurrentUser().getSubscribedToUsers();
+        List<VideoDto> allVideos = new ArrayList<>();
+        for (String sutbscribedToUser: subscribedToUsersList) {
+            allVideos.addAll(videoService.getVideosByUserId(sutbscribedToUser));
+        }
+
+        if(allVideos != null)
+            return new ResponseEntity<>(allVideos , HttpStatus.OK);
+        else
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/history")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<VideoDto>> getHistoryVideos(){
+        Set<String> historyVideoList = userService.getCurrentUser().getVideoHistory();
+        List<VideoDto> allVideos = new ArrayList<>();
+        for (String videoId: historyVideoList) {
+            allVideos.add(videoService.getVideoDtoById(videoId));
+        }
+
+        if(allVideos != null)
+            return new ResponseEntity<>(allVideos , HttpStatus.OK);
+        else
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/liked")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<VideoDto>> getLikedVideos(){
+        Set<String> historyVideoList = userService.getCurrentUser().getLikedVideos();
+        List<VideoDto> allVideos = new ArrayList<>();
+        for (String videoId: historyVideoList) {
+            allVideos.add(videoService.getVideoDtoById(videoId));
+        }
+
+        if(allVideos != null)
+            return new ResponseEntity<>(allVideos , HttpStatus.OK);
+        else
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+    }
+
 
 
 }

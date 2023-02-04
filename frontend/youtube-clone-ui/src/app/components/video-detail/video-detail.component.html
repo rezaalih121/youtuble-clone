@@ -41,7 +41,7 @@
         <mat-chip *ngFor="let tag of tags">{{tag}}</mat-chip>
       </mat-chip-listbox>
       <mat-divider></mat-divider>
-      <app-comments *ngIf="videoAvailable" [videoId]="videoId"></app-comments>
+      <app-comments *ngIf="videoAvailable" [videoId]="videoId" [publisherId]="publisherId"></app-comments>
     </div>
   </div>
   <div fxFlex="5%"></div>

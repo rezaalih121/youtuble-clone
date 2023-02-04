@@ -1,6 +1,6 @@
 export interface VideoDto{
   id: string ;
-  publisherId: string ;
+  userId: string ;
   title: string ;
   description: string ;
   videoUrl: string ;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {OidcSecurityService} from "angular-auth-oidc-client";
 
 @Component({
   selector: 'app-callback',
@@ -8,11 +9,25 @@ import {Router} from "@angular/router";
   styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent {
-  constructor(private userService: UserService , private router:Router) {
+  isAuthenticated : boolean = false;
+  constructor(private userService: UserService , private router:Router , private oidcSecurityService:OidcSecurityService ) {
 
-    this.userService.registerUser();
-    console.log("callback is done");
-    this.router.navigateByUrl('');
+  }
+
+  ngOnInit(){
+    this.oidcSecurityService.isAuthenticated$.subscribe(({isAuthenticated}) => {
+      this.isAuthenticated = isAuthenticated;
+      //console.log(this.isAuthenticated);
+      //console.log("callback is done");
+
+      if(this.isAuthenticated){
+        this.userService.registerUser();
+
+        console.log("user registered successfully");
+        this.router.navigateByUrl("/featured")
+      }
+    })
+    this.router.navigateByUrl("/featured")
 
   }
 

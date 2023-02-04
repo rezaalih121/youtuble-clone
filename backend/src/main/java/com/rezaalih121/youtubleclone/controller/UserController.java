@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<String> register(Authentication authentication){
         Jwt jwt = (Jwt)authentication.getPrincipal();
         String userId = userRegistrationService.registerUser(jwt.getTokenValue());
-        System.out.println("register page"+userId);
+        //System.out.println("register page"+userId);
         if(userId != null)
             return new ResponseEntity<>(userId , HttpStatus.CREATED);
         else
@@ -69,7 +69,7 @@ public class UserController {
         userInfoDto.setName(currentUser.getFullName());
         userInfoDto.setFamilyName(currentUser.getLastName());
         userInfoDto.setGivenName(currentUser.getFirstName());
-        userInfoDto.setPicture(currentUser.getPictur());
+        userInfoDto.setPicture(currentUser.getPicture());
         userInfoDto.setSubscribersCount(String.valueOf(currentUser.getSubscribers().size()));
 
         if(userInfoDto != null)
@@ -90,7 +90,7 @@ public class UserController {
         userInfoDto.setName(currentUser.getFullName());
         userInfoDto.setFamilyName(currentUser.getLastName());
         userInfoDto.setGivenName(currentUser.getFirstName());
-        userInfoDto.setPicture(currentUser.getPictur());
+        userInfoDto.setPicture(currentUser.getPicture());
         userInfoDto.setSubscribersCount(String.valueOf(currentUser.getSubscribers().size()));
 
         if(userInfoDto != null)

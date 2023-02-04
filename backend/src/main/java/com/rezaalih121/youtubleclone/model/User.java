@@ -22,7 +22,7 @@ public class User {
     private String fullName;
     private String emailAddress;
     private String sub;
-    private String pictur;
+    private String picture;
     private Set<String> subscribedToUsers = ConcurrentHashMap.newKeySet();;
     private Set<String> subscribers = ConcurrentHashMap.newKeySet();;
     private Set<String> videoHistory = ConcurrentHashMap.newKeySet();

@@ -27,7 +27,7 @@
       </mat-card-header>
     </div>
     <div fxFlex="50%" class="delete-comment" fxFlexAlign="end">
-      <button mat-icon-button (click)="deleteComment(videoId,comment.authorId,comment.createdAt)" >
+      <button mat-icon-button *ngIf="comment.authorId == currentUserId" (click)="deleteComment(videoId,comment.authorId,comment.createdAt)" >
         <mat-icon>delete</mat-icon>
       </button>
     </div>

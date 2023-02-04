@@ -14,7 +14,11 @@ export class VideoCardComponent {
   userPicture!: String;
 
   constructor(private userService: UserService) {
-    userService.getUserInfo().subscribe(data=>{
+
+  }
+
+  ngOnInit(){
+    this.userService.getPublisherInfo(this.video.userId).subscribe(data=>{
       this.userPicture = data.picture;
     })
   }

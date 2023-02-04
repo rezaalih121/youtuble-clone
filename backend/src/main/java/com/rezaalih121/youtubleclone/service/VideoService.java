@@ -36,6 +36,7 @@ public class VideoService {
         Video savedVido =getVideoById(videoDto.getId());
         // Map the videoDto fields to video
         savedVido.setTitle(videoDto.getTitle());
+        savedVido.setUserId(userService.getCurrentUser().getId());
         savedVido.setDescription(videoDto.getDescription());
         savedVido.setTags(videoDto.getTags());
         savedVido.setThumbnailUrl(videoDto.getThumbnailUrl());
@@ -65,7 +66,13 @@ public class VideoService {
        return videoRepository.findById(videoId)
                 .orElseThrow(()-> new IllegalArgumentException("Cannot find video by id - " + videoId));
     }
+    public VideoDto getVideoDtoById(String videoId){
 
+        Video video = videoRepository.findById(videoId)
+                .orElseThrow(()-> new IllegalArgumentException("Cannot find video by id - " + videoId));
+        return mapToVideoDto(video);
+
+    }
     public VideoDto getVideoDetails(String videoId) {
         Video savedVideo = getVideoById(videoId);
         increaseVideoCount(savedVideo);
@@ -138,7 +145,7 @@ public class VideoService {
         videoDto.setVideoUrl(videoById.getVideoUrl());
         videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
         videoDto.setId(videoById.getId());
-        videoDto.setPublisherId(videoById.getUserId());
+        videoDto.setUserId(videoById.getUserId());
         videoDto.setTitle(videoById.getTitle());
         videoDto.setDescription(videoById.getDescription());
         videoDto.setTags(videoById.getTags());
@@ -187,4 +194,7 @@ public class VideoService {
 
     }
 
+    public List<VideoDto> getVideosByUserId(String userId) {
+        return videoRepository.findAllByUserId(userId).get().stream().map(this::mapToVideoDto).toList();
+    }
 }

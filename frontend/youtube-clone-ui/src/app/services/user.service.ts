@@ -21,7 +21,7 @@ export class UserService {
   }
 
   unSubscribeUser(userId: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(this.api  + "/subscribe/" + userId, null);
+    return this.httpClient.post<boolean>(this.api  + "/unSubscribe/" + userId, null);
   }
 
   registerUser() {
